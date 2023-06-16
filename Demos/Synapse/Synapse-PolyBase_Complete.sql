@@ -6,13 +6,14 @@ CREATE MASTER KEY;
 CREATE DATABASE SCOPED CREDENTIAL ADLSCreds1
 WITH
 	IDENTITY = 'Storage Account Key' ,
-    SECRET = 'ZSsPYzvB0LOlniMbREziY5wf+AQNnuBAc4QToRcGO4a16nybdtDzgTh40N1j3P3wQP9O4zZWGtmXeBRW0p9HcQ=='
+    SECRET = 'X1gO9EzNlosxik2Ijfpuxt72X7mCejtHsX8FCDqKz8QLFlBhhDG4fUO//kI6c2hsH6dshVo6gpDy+AStBpw+Jg=='
 ;
 
 -- https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction-abfs-uri
+-- DROP EXTERNAL DATA SOURCE ADLG2Source
 CREATE EXTERNAL DATA SOURCE ADLG2Source
 WITH
-  ( LOCATION = 'abfss://logs@datalakegen02or.dfs.core.windows.net/sample-csv.csv' ,
+  ( LOCATION = 'abfss://fs1@msdp203storage.blob.core.windows.net/sample-csv.csv' ,
    CREDENTIAL = ADLSCreds1,
     TYPE = HADOOP
  );
@@ -38,7 +39,7 @@ CREATE EXTERNAL TABLE dbo.MyExternalTable (
       ,[subscription_type] NVARCHAR(256) NULL
 )
 WITH (
-    LOCATION='../',
+    LOCATION='./',
     DATA_SOURCE=ADLG2Source,
     FILE_FORMAT=csvFile,
 	REJECT_TYPE = value,
